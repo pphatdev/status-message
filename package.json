@@ -1,0 +1,38 @@
+{
+  "name": "status-message",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "type": "module",
+  "scripts": {
+    "build:esm": "tsc src/index.ts --outDir dist/esm --module ESNext --declaration --declarationDir dist/esm/types",
+    "build:cjs": "tsc src/index.ts --outDir dist/cjs --module CommonJS --declaration --declarationDir dist/cjs/types",
+    "build": "npm run build:esm && npm run build:cjs && npm run pages",
+    "watch:esm": "tsc -w src/index.ts --outDir dist/esm --module ESNext --declaration --declarationDir dist/esm/types",
+    "watch:cjs": "tsc -w src/index.ts --outDir dist/cjs --module CommonJS --declaration --declarationDir dist/cjs/types",
+    "pages": "typedoc --out docs src/index.ts",
+    "watch:pages": "typedoc --out docs src/index.ts --watch",
+    "serve": "npm run pages && npx http-server docs -p 8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L-Sophat/status-message.git"
+  },
+  "author": {
+    "name": "pphatdev",
+    "email": "info.sophat@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/L-Sophat/status-message/issues"
+  },
+  "homepage": "https://github.com/L-Sophat/status-message#readme",
+  "dependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "typedoc": "^0.28.5"
+  }
+}
