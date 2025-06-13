@@ -8,7 +8,7 @@
   "scripts": {
     "build:esm": "tsc src/index.ts --outDir dist/esm --module ESNext --declaration --declarationDir dist/esm/types",
     "build:cjs": "tsc src/index.ts --outDir dist/cjs --module CommonJS --declaration --declarationDir dist/cjs/types",
-    "build": "npm run build:esm && npm run build:cjs",
+    "build": "npm run build:esm && npm run build:cjs && npm run pages",
     "watch:esm": "tsc -w src/index.ts --outDir dist/esm --module ESNext --declaration --declarationDir dist/esm/types",
     "watch:cjs": "tsc -w src/index.ts --outDir dist/cjs --module CommonJS --declaration --declarationDir dist/cjs/types",
     "pages": "typedoc --out docs src/index.ts",

@@ -1,17 +1,33 @@
-name: Deploy Docs to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
+        
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -23,8 +39,24 @@ jobs:
       - name: Build docs
         run: npm run pages
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          # Upload entire repository
+          path: "./docs"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          # Use the default branch for deployment
+          branch: main
+          # Use the default GitHub Pages build output directory
+          publish_dir: "./docs"
+          # Use the GITHUB_TOKEN for authentication
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Set the commit message for the deployment
+          commit_message: "Deploy static content to GitHub Pages"
